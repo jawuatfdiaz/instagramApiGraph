@@ -18,12 +18,12 @@ jobs:
         with:
           php-version: '7.4'
 
-      - name: Deploy to gh-pages
+      - name: Merge Main into Gh-Pages
         run: |
-          cd instagram_graph_api
           git checkout gh-pages
-          git rm -rf .
-          git checkout main -- . 
-          git commit -m "Deploy to gh-pages"
+          git merge main --no-ff --no-commit
+          git commit -m "Merge main into gh-pages"
           git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GT_TOKEN }}
 
