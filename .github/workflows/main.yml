@@ -20,11 +20,10 @@ jobs:
 
       - name: Deploy to gh-pages
         run: |
+          cd instagram_graph_api
           git checkout gh-pages
           git rm -rf .
-          git checkout main -- instagram_graph_api
-          mv -f instagram_graph_api/* .
-          git add .
+          git checkout main -- . 
           git commit -m "Deploy to gh-pages"
           git push origin gh-pages
 
