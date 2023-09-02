@@ -17,15 +17,25 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-        
+
+      - name: Instalar npm
+        run: |
+          sudo apt update
+          sudo apt install npm
+
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd instagramApiGraph
+          npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd instagramApiGraph
+          npm run build
 
       - name: Deploy to gh-pages
         run: |
+          cd instagramApiGraph
           git checkout gh-pages
           git rm -rf .
           git checkout main -- instagram_graph_api
