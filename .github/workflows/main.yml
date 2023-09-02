@@ -13,17 +13,3 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v2
 
-      - name: Configurar PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-
-      - name: Merge Main into Gh-Pages
-        run: |
-          git checkout gh-pages
-          git merge main --no-ff --no-commit
-          git commit -m "Merge main into gh-pages"
-          git push origin gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GT_TOKEN }}
-
