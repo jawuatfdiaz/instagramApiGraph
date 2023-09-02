@@ -1,0 +1,45 @@
+name: Deploy GH Pages
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'  # Cambia la versión de PHP según tus requerimientos
+
+      - name: Instalar Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+          composer --version
+
+      - name: Install dependencies
+        run: composer install
+        
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to gh-pages
+        run: |
+          git checkout gh-pages
+          git rm -rf .
+          git checkout main -- instagram_graph_api
+          mv -f instagram_graph_api/* .
+          git add .
+          git commit -m "Deploy to gh-pages"
+          git push origin gh-pages
+
