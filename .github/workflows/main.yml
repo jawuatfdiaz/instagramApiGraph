@@ -16,16 +16,7 @@ jobs:
       - name: Configurar PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'  # Cambia la versión de PHP según tus requerimientos
-
-      - name: Instalar Composer
-        run: |
-          curl -sS https://getcomposer.org/installer | php
-          sudo mv composer.phar /usr/local/bin/composer
-          composer --version
-
-      - name: Install dependencies
-        run: composer install
+          php-version: '7.4'
         
       - name: Install dependencies
         run: npm install
