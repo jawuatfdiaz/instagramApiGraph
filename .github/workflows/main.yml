@@ -25,17 +25,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd instagramApiGraph
+          cd instagram_graph_api
           npm install
-
-      - name: Build
-        run: |
-          cd instagramApiGraph
           npm run build
 
       - name: Deploy to gh-pages
         run: |
-          cd instagramApiGraph
           git checkout gh-pages
           git rm -rf .
           git checkout main -- instagram_graph_api
