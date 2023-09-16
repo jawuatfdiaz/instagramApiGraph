@@ -86,7 +86,7 @@ var facebookLogin = function(){
 }
 
 $(document).on('click', '#login-facebook', function(e){
-  e.prevenDefault();
+  e.preventDefault();
 
   facebookLogin();
 })
