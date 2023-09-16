@@ -27,19 +27,68 @@
             console.error("Error al cargar el formulario de inicio de sesión:", error);
         });
 
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '2532904296869709',
-            xfbml      : true,
-            version    : 'v17.0'
-          });
-          FB.AppEvents.logPageView();
-        };
-      
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "https://connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
+$(function(){
+
+  var app_id = '310256011684326';
+  var scopes = 'email, public_profile';
+
+  var btn_login = '<a href="#" id="login-facebook" class="btn btn-primary facebook"> <span>Login with Facebook</span> <i class="fa fa-facebook"></i> </a>'
+
+  window.fbAsyncInit = function() {
+
+    FB.init({
+      appId            : app_id,
+      status           : true,
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v18.0'
+    });
+
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response, function(){
+        
+      });
+  });
+};
+
+var statusChangeCallback = function(response, callback) {  
+  console.log(response);                   
+  if (response.status === 'connected') {   
+    getFacebookData();  
+  } else {                                 
+   callback(false);
+  }
+}
+
+var checkLoginState = function(callback) {              
+  FB.getLoginStatus(function(response) { 
+    statusChangeCallback(response);
+  });
+}
+
+var getFacebookData = function(){
+  FB.api('/me', function(response) {
+    console.log('Successful login for: ' + response.name);
+    document.getElementById('status').innerHTML =
+      'Thanks for logging in, ' + response.name + '!';
+  });
+}
+
+var facebookLogin = function(){
+  checkLoginState(function(response){
+    if(!response){
+      FB.login(function(response) {
+        if(response.status === 'connected')
+        getFacebookData();
+      }, {scope: scopes})
+    }
+  });
+}
+
+$(document).on('click', '#login-facebook', function(e){
+  e.prevenDefault();
+
+  facebookLogin();
+})
+
+})
