@@ -69,6 +69,10 @@ var checkLoginState = function(callback) {
 var getFacebookData = function(){
   FB.api('/me', function(response) {
     console.log('Successful login for: ' + response.name);
+    $('#login').after(div_session);
+	  		$('#login').remove();
+	  		$('#facebook-session strong').text("Bienvenido: "+response.name);
+	  		$('#facebook-session img').attr('src','http://graph.facebook.com/'+response.id+'/picture?type=large');
   });
 }
 
@@ -83,10 +87,30 @@ var facebookLogin = function(){
   });
 }
 
+var facebookLogout = function() {
+  checkLoginState(function(data) {
+    if (data.status === 'connected') {
+    FB.logout(function(response) {
+      $('#facebook-session').before(btn_login);
+      $('#facebook-session').remove();
+    })
+  }
+  })
+}
+
 $(document).on('click', '#login-facebook', function(e){
   e.preventDefault();
 
   facebookLogin();
+})
+
+$(document).on('click', '#logout', function(e) {
+  e.preventDefault();
+
+  if (confirm("¿Está seguro?"))
+    facebookLogout();
+  else 
+    return false;
 })
 
 })
