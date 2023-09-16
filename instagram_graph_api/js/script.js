@@ -33,6 +33,12 @@ $(function(){
   var scopes = 'email, public_profile';
 
   var btn_login = '<a href="#" id="login-facebook" class="btn btn-primary facebook"> <span>Login with Facebook</span> <i class="fa fa-facebook"></i> </a>'
+  
+  var div_session = "<div id='facebook-session'>"+
+					  "<strong></strong>"+
+					  "<img>"+
+					  "<a href='#' id='logout' class='btn btn-danger'>Cerrar sesión</a>"+
+					  "</div>";
 
   window.fbAsyncInit = function() {
 
